@@ -81,10 +81,10 @@ I calculated the maximum values for both total_laid_off and percentage_laid_off.
 SELECT MAX(total_laid_off), MAX(percentage_laid_off)
 FROM layoffs_copy2;
 ```
-**Results**: The maximum total layoffs recorded is 10,000 and the highest percentage laid off is 100%.
+**Results**: The maximum total layoffs recorded is 12,000 and the highest percentage laid off is 100%.
 
 2.**Companies with the Highest Number of Layoffs**
-I identified the companies that laid off the highest number of employees and their respective percentages.
+I identified the companies that laid off the highest number of employees.
 ```sql
 SELECT company, SUM(total_laid_off)
 FROM layoffs_copy2
@@ -92,9 +92,9 @@ GROUP BY company
 ORDER BY 2 DESC;
 ```
 **Results**: The top 3 companies with highest number of layoffs were;
-- Company A: 15,000 layoffs
-- Company B: 12,500 layoffs
-- Company C: 10,000 layoffs
+- Amazon: 18,150 layoffs
+- Google: 12,000 layoffs
+- Meta: 11,000 layoffs
 
 3.**Companies that Laid Off All Employees**
 I queried for companies that laid off all their employees, ordering by the total number of layoffs.
@@ -104,18 +104,18 @@ FROM layoffs_copy2
 WHERE percentage_laid_off = 1
 ORDER BY total_laid_off DESC;
 ```
-**Results**: This companies made 100% layoffs;
-- Company C
-- Company C
-- Company C
+**Results**: This companies made 100% layoffs; Katerra, Butler Hospitality, Deliv, Jump, SEND, HOOQ, Stoqo and Stay Alfred
 
-4.**Layoffs  by year and industry**
+
+4.**The stages of the companies most affected**
 ```sql
-SELECT YEAR(`date`), SUM(total_laid_off)
+SELECT stage, SUM(total_laid_off)
 FROM layoffs_copy2
-GROUP BY YEAR(`date`)
+GROUP BY stage
 ORDER BY 2 DESC;
 ```
+**Results**:The most affected companies are at **Post-IPO** stage with **204,132 layoffs** while the least affected companies are at **Subsidiary** stage with a total of **1,094 layoffs**
+
 5.**Industry most affected by layoffs**
 ```sql
 SELECT industry, SUM(total_laid_off)
@@ -124,7 +124,8 @@ GROUP BY industry
 ORDER BY 2 DESC;
 ```
 
-**Results**:
+**Results**: **Consumer** industry was the most affected with **45,182 layoffs** followed by retail industry with 43,613 and the least affected is **manufacturing** industry with **20 layoffs**.
+
 6.**Country most affected by layoffs**
 ```sql
 SELECT country, SUM(total_laid_off)
@@ -132,6 +133,7 @@ FROM layoffs_copy2
 GROUP BY country
 ORDER BY 2 DESC;
 ```
-**Results**:
+
+**Results**: The **United states** is the most affected with a total of **256,559 layoffs** while the least affected country was **Poland** with **25 layoffs**
 
 
