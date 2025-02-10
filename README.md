@@ -21,6 +21,7 @@ The data cleaning process was performed in the following steps:
 1.**Removing Duplicates**
 We identified and removed duplicate rows based on columns like company, location, industry, and others. A new column row_num was added to help with this identification and deletion.
 
+```sql
 SELECT *,
 ROW_NUMBER() OVER(PARTITION BY company, location, industry, total_laid_off, percentage_laid_off, `date`, stage, country) AS row_num
 FROM layoffs_copy;
