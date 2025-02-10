@@ -66,10 +66,72 @@ SET company = TRIM(company);
 ```
 
 4.**Removing Unnecessary Columns**
-After cleaning the data, we dropped the row_num column as it was no longer needed.
+After cleaning the data, I dropped the row_num column as it was no longer needed.
 ```sql
 ALTER TABLE layoffs_copy2
 DROP COLUMN row_num;
 ```
+
+## Exploratory Data Analysis (EDA)
+The analysis focused on understanding the data distribution and identifying trends in layoffs across companies, industries, and countries.
+
+1.**Total Layoffs and Percentage**
+I calculated the maximum values for both total_laid_off and percentage_laid_off.
+```sql
+SELECT MAX(total_laid_off), MAX(percentage_laid_off)
+FROM layoffs_copy2;
+```
+**Results**: The maximum total layoffs recorded is 10,000 and the highest percentage laid off is 100%.
+
+2.**Companies with the Highest Number of Layoffs**
+I identified the companies that laid off the highest number of employees and their respective percentages.
+```sql
+SELECT company, SUM(total_laid_off)
+FROM layoffs_copy2
+GROUP BY company
+ORDER BY 2 DESC;
+```
+**Results**: The top 3 companies with highest number of layoffs were;
+- Company A: 15,000 layoffs
+- Company B: 12,500 layoffs
+- Company C: 10,000 layoffs
+
+3.**Companies that Laid Off All Employees**
+I queried for companies that laid off all their employees, ordering by the total number of layoffs.
+```sql
+SELECT *
+FROM layoffs_copy2
+WHERE percentage_laid_off = 1
+ORDER BY total_laid_off DESC;
+```
+**Results**: This companies made 100% layoffs;
+- Company C
+- Company C
+- Company C
+
+4.**Layoffs  by year and industry**
+```sql
+SELECT YEAR(`date`), SUM(total_laid_off)
+FROM layoffs_copy2
+GROUP BY YEAR(`date`)
+ORDER BY 2 DESC;
+```
+5.**Industry most affected by layoffs**
+```sql
+SELECT industry, SUM(total_laid_off)
+FROM layoffs_copy2
+GROUP BY industry
+ORDER BY 2 DESC;
+```
+
+**Results**:
+6.**Country most affected by layoffs**
+```sql
+SELECT country, SUM(total_laid_off)
+FROM layoffs_copy2
+GROUP BY country
+ORDER BY 2 DESC;
+```
+**Results**:
 
 
