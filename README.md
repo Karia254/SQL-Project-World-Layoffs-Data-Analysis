@@ -26,6 +26,7 @@ I identified and removed duplicate rows based on columns like company, location,
 SELECT *,
 ROW_NUMBER() OVER(PARTITION BY company, location, industry, total_laid_off, percentage_laid_off, `date`, stage, country) AS row_num
 FROM layoffs_copy;
+```
 
 2.**Handling Null Values**
 
@@ -34,11 +35,41 @@ I identified and handled null or empty values, particularly in columns like indu
 DELETE
 FROM layoffs_copy2
 WHERE total_laid_off IS NULL AND percentage_laid_off IS NULL;
+```
 
 3.**Standardizing Data**
-Data was standardized to ensure uniformity across different columns such as company, industry, and country. For instance, we replaced variations like 'United States' with a single standard value.
+Data was standardized to ensure uniformity across different columns such as company, industry, and country. For instance, I replaced variations like 'United States' and 'United States.' with a single standard value, 'United States'.
+```sql
+SELECT DISTINCT country
+FROM layoffs_copy2
+ORDER BY 1;  #United States and United States. is same country but is recorded as different country
+UPDATE layoffs_copy2
+SET country = 'United States'
+WHERE country LIKE 'United States%'; 
+```
+**Removing inconsistencies in industry column**
+```sql
+SELECT DISTINCT industry
+FROM layoffs_copy2
+ORDER BY 1;  #jsut to see if there is any issue do this on other columns, from these i saw an issue with country column as well
+SELECT *
+FROM layoffs_copy2
+WHERE industry LIKE 'Crypto%';
+UPDATE layoffs_copy2
+SET industry = 'crypto'
+WHERE industry LIKE 'crypto%';
+```
+**Trimming Whitespace for Data Consistency**
 ```sql
 UPDATE layoffs_copy2
 SET company = TRIM(company);
+```
+
+4.**Removing Unnecessary Columns**
+After cleaning the data, we dropped the row_num column as it was no longer needed.
+```sql
+ALTER TABLE layoffs_copy2
+DROP COLUMN row_num;
+```
 
 
