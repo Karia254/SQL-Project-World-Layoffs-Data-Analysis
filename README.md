@@ -26,6 +26,10 @@ I identified and removed duplicate rows based on columns like company, location,
 SELECT *,
 ROW_NUMBER() OVER(PARTITION BY company, location, industry, total_laid_off, percentage_laid_off, `date`, stage, country) AS row_num
 FROM layoffs_copy;
+DELETE
+FROM layoffs_copy2
+WHERE row_num>1;   #It deletes the duplicates and retains only one
+
 ```
 
 2.**Handling Null Values**
