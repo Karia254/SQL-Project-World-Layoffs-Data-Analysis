@@ -2,7 +2,7 @@
 ### Project Overview
 This project involves cleaning and analyzing layoffs data to identify trends, patterns, and insights regarding layoffs in various companies, industries and countries. The goal is to examine factors such as total layoffs, percentage of layoffs, and industry impact to help understand the dynamics of workforce reductions.
 
-## Data Dictionary
+### Data Dictionary
 Here is a list of the columns in the layoffs_copy2 table:
 
 - **company (TEXT)**: The name of the company.
@@ -15,7 +15,7 @@ Here is a list of the columns in the layoffs_copy2 table:
 - **country (TEXT)**: The country where the company is located.
 - **funds_raised_millions (INT)**: The funds raised by the company (in millions).
 
- ## Data Cleaning Process
+ ### Data Cleaning Process
 The data cleaning process was performed in the following steps:
 
 1.**Removing Duplicates**
@@ -76,7 +76,7 @@ ALTER TABLE layoffs_copy2
 DROP COLUMN row_num;
 ```
 
-## Exploratory Data Analysis (EDA)
+### Exploratory Data Analysis (EDA)
 The analysis focused on understanding the data distribution and identifying trends in layoffs across companies, industries, and countries.
 
 1.**Total Layoffs and Percentage**
