@@ -1,5 +1,5 @@
-# Worldwide Layoffs: Data Cleaning & EDA Using SQL
-## Project Overview
+## Worldwide Layoffs: Data Cleaning & EDA Using SQL
+### Project Overview
 This project involves cleaning and analyzing layoffs data to identify trends, patterns, and insights regarding layoffs in various companies, industries and countries. The goal is to examine factors such as total layoffs, percentage of layoffs, and industry impact to help understand the dynamics of workforce reductions.
 
 ## Data Dictionary
