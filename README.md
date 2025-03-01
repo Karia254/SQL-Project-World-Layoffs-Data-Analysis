@@ -25,15 +25,24 @@ The data cleaning process involved the following steps:
 Duplicate rows were identified and removed based on columns like company, location, industry, and others. A `row_num` column was added to assist in identifying duplicates.
 
 ```sql
--- Identify duplicates
-SELECT *,
-ROW_NUMBER() OVER(PARTITION BY company, location, industry, total_laid_off, percentage_laid_off, date, stage, country) AS row_num
-FROM layoffs_copy;
-
--- Remove duplicates
-DELETE
-FROM layoffs_copy2
-WHERE row_num > 1;
+WITH duplicate_cte AS (
+    SELECT *,
+           ROW_NUMBER() OVER(
+               PARTITION BY company, location, industry, total_laid_off, 
+                            percentage_laid_off, `date`, stage, country, funds_raised_millions
+           ) AS row_num  
+    FROM layoffs_copy
+)
+DELETE FROM layoffs_copy 
+WHERE (company, location, industry, total_laid_off, 
+       percentage_laid_off, `date`, stage, country, funds_raised_millions) 
+      IN (
+          SELECT company, location, industry, total_laid_off, 
+                 percentage_laid_off, `date`, stage, country, funds_raised_millions
+          FROM duplicate_cte
+          WHERE row_num > 1
+      );
+;
 ```
 
 ### 2. Handling Null Values
